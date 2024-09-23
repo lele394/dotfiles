@@ -6,7 +6,7 @@
 # requires kitty terminal
 
 # Path to the transparent image
-transparent_image="~/Downloads/wallapapers/transparent.png"
+transparent_image="./transparent.png"
 
 # Function to preview files based on their extension
 preview_file() {
