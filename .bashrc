@@ -164,8 +164,13 @@ alias fexp="~/bash-script/fuzzy-explorer.sh"
 # Just adding a ~/bin directory to add my own stuff later
 PATH="~/bin:$PATH"
 
+# Env var for flatpak
+# '/var/lib/flatpak/exports/share'
+# '/home/leo/.local/share/flatpak/exports/share'
+XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:/home/leo/.local/share/flatpak/exports/share"
 
-
+# source env file from rust and cargo
+. "$HOME/.cargo/env"
 
 
 
@@ -173,3 +178,4 @@ PATH="~/bin:$PATH"
 
 # Keep at the end : starship start
 eval "$(starship init bash)"
+. "$HOME/.cargo/env"
