@@ -6,7 +6,7 @@
 # requires kitty terminal
 
 # Path to the transparent image
-transparent_image="~/Downloads/wallapapers/transparent.png"
+transparent_image="./transparent.png"
 
 # Function to preview files based on their extension
 preview_file() {
@@ -43,7 +43,8 @@ preview_file() {
 
 # Export the function so it's available in the subshell
 export -f preview_file
-
+directory="${1:-.}"
+cd $directory
 # Run fzf with the custom preview function
 fzf --ansi --preview-window=up:60%:cycle --preview 'bash -c "preview_file {}"' | xargs echo 
 
