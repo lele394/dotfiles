@@ -128,10 +128,6 @@ fi
 
 # Honestly should install fzf
 
-
-# Makes so commands starting with space are not saved in history (important for up arrow fzfhist)
- HISTCONTROL=ignorespace
-
 # fman utils to open manual for specific commands
 alias fman="compgen -c | fzf | xargs man"
 
@@ -159,7 +155,11 @@ alias bat='batcat'
 # Alias the fuzzy-explorer + preview script in bash-script
 alias fexp="~/bash-script/fuzzy-explorer.sh"
 
+# Alias nvim with flatpak install
+alias nvim='flatpak run io.neovim.nvim'
 
+# Open-webui serve shortcut
+alias ows='open-webui serve'
 
 # Just adding a ~/bin directory to add my own stuff later
 PATH="~/bin:$PATH"
@@ -178,4 +178,61 @@ XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:/home/leo/.local/sh
 
 # Keep at the end : starship start
 eval "$(starship init bash)"
-. "$HOME/.cargo/env"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/leo/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/leo/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/leo/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/leo/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+
+
+
+
+
+# --- Old NVM loading ---
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+export NVM_DIR="$HOME/.nvm"
+
+lazy_nvm() {
+    unset -f nvm node npm npx
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+}
+
+for cmd in nvm node npm npx; do
+    eval "$cmd() { lazy_nvm; command $cmd \"\$@\"; }"
+done
+
+      
+
+
+    
+
+    
+
+
+
+
+export PATH=$PATH:/home/leo/.spicetify
+
+
+
+
+
+
+# Starting ascii
+python ~/Desktop/RW-terminal/convert.py --random --silent --small --fetch-system
