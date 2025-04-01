@@ -180,18 +180,27 @@ XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:/home/leo/.local/sh
 eval "$(starship init bash)"
 
 # >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/leo/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/leo/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/leo/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/leo/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
+
+
+lazy_conda() {
+	echo "Lazy-loading conda..."
+    unset -f conda activate deactivate python pip conda-env
+	__conda_setup="$('/home/leo/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+	if [ $? -eq 0 ]; then
+	    eval "$__conda_setup"
+	else
+	    if [ -f "/home/leo/miniconda3/etc/profile.d/conda.sh" ]; then
+		. "/home/leo/miniconda3/etc/profile.d/conda.sh"
+	    else
+		export PATH="/home/leo/miniconda3/bin:$PATH"
+	    fi
+	fi
+	unset __conda_setup
+}
+
+for cmd in conda activate deactivate python pip conda-env; do
+    eval "$cmd() { lazy_conda; command $cmd \"\$@\"; }"
+done
 # <<< conda initialize <<<
 
 
@@ -208,6 +217,7 @@ unset __conda_setup
 export NVM_DIR="$HOME/.nvm"
 
 lazy_nvm() {
+	echo "Lazy-loading nvm..."
     unset -f nvm node npm npx
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
@@ -235,4 +245,5 @@ export PATH=$PATH:/home/leo/.spicetify
 
 
 # Starting ascii
-python ~/Desktop/RW-terminal/convert.py --random --silent --small --fetch-system
+# python ~/Desktop/RW-terminal/convert.py --random --silent --small --fetch-system
+~/dotfiles/rw_fetch/rw_fetch_rs.o
